@@ -8,6 +8,8 @@
   roles:
    - role: geerlingguy.homebrew
      tags: ['homebrew']
+   - role: geerlingguy.mas
+     when: mas_installed_apps
 
   tasks:
     - name: Clone dotfiles
@@ -96,3 +98,13 @@
 
     - name: Restart Finder
       shell: killall Finder
+
+    - name: Enable TimeMachine
+      shell: tmutil enable
+      become: true
+
+    - name: Set path for iterm preferences
+      shell: defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/dotfiles/"
+
+    - name: Restore iterm preferences
+      shell: defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
