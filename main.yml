@@ -47,6 +47,7 @@
       pip:
         name: git+git://github.com/powerline/powerline#egg=powerline-status
         extra_args: --user
+      become: true
 
     - name: install vim colorscheme
       git:
