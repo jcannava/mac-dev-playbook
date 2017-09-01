@@ -89,6 +89,10 @@ homebrew_cask_apps:
   - slack
   - sublime-text
   - spotify
+  - tunnelblick
   - vagrant
   - virtualbox
   - zoomus
+
+mas_installed_apps:
+    - { id: 443987910, name: "1Password"}
