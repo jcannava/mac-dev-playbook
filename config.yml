@@ -48,6 +48,14 @@ dockitems_to_persist:
     path: "/Applications/Spotify.app"
     pos: 6
 
+dockfolders_to_persist:
+    - name: Applications
+      path: '/Applications'
+    - name: Documents
+      path: '~/Documents'
+    - name: Downloads
+      path: '~/Downloads'
+
 homebrew_installed_packages:
   - autoconf
   - automake
@@ -59,6 +67,7 @@ homebrew_installed_packages:
   - git
   - go
   - kubernetes-cli
+  - mas
   - nmap
   - openssl
   - ssh-copy-id
