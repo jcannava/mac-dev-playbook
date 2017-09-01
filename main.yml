@@ -1,0 +1,65 @@
+---
+- hosts: all
+  connection: local
+
+  vars_files:
+    - config.yml
+
+  roles:
+   - role: geerlingguy.homebrew
+     tags: ['homebrew']
+
+  tasks:
+    - name: Clone dotfiles
+      git:
+        repo: git://github.com/jcannava/dotfiles
+        dest: ~/.dotfiles
+
+    - name: Run deploy.sh (dotfiles)
+      shell: ~/.dotfiles/deploy.sh
+
+    - name: Make vim colorscheme directory
+      file: 
+        path: ~/.vim/pack/themes/opt
+        state: directory
+        mode: 0755
+
+    - name: Make vim autoload directory
+      file:
+        path: ~/.vim/autoload
+        state: directory
+        mode: 0755
+
+    - name: Make vim bundle directory
+      file: 
+        path: ~/.vim/bundle
+        state: directory
+        mode: 0755
+
+    - name: Install powerline
+      pip:
+        name: git+git://github.com/powerline/powerline#egg=powerline-status
+        extra_args: --user
+
+    - name: install vim colorscheme
+      git:
+        repo: https://github.com/lifepillar/vim-solarized8.git
+        dest: ~/.vim/pack/themes/opt/solarized8
+
+    - name: install vim pathogen
+      get_url:
+        url: https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+        dest: ~/.vim/autoload/pathogen.vim
+
+    - name: Remove items from Dock
+      shell: dockutil --remove '{{ item }}'
+      ignore_errors: true
+      with_items: '{{ dockitems_to_remove }}'
+
+    - name: Check if items in dock exist
+      shell: dockutil --find '{{ item.name }}' || dockutil --add '{{ item.path }}'
+      with_items: '{{ dockitems_to_persist }}'
+
+    - name: Fix Order
+      shell: dockutil --move '{{ item.name }}' --position {{ item.pos }}
+      with_items: '{{ dockitems_to_persist }}'
