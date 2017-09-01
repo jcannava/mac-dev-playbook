@@ -101,3 +101,6 @@
 
     - name: Restore iterm preferences
       shell: defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+
+    - name: Set Mouse Scroll Direction to classic
+      shell: defaults write com.apple.swipescrolldirection -bool false
