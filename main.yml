@@ -43,6 +43,9 @@
         state: directory
         mode: 0755
 
+    - name: Install docker-py
+      shell: pip install --user docker-py
+
     - name: Install powerline
       shell: pip install --user git+git://github.com/powerline/powerline#egg=powerline-status
 
